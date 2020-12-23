@@ -1,4 +1,4 @@
-package com.markany.web.mvc;
+package com.markany.web.util;
 
 import java.io.IOException;
 

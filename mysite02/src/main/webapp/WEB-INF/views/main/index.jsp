@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,40 +9,23 @@
 </head>
 <body>
 <div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="">·Î±×ÀÎ</a><li>
-				<li><a href="">È¸¿ø°¡ÀÔ</a><li>
-				<li><a href="">È¸¿øÁ¤º¸¼öÁ¤</a><li>
-				<li><a href="">·Î±×¾Æ¿ô</a><li>
-				<li>´Ô ¾È³çÇÏ¼¼¿ä ^^;</li>
-			</ul>
-		</div>
+		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
 					<img id="profile" src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-1/p240x240/30705531_2083087868372808_5261052926483232647_n.jpg?_nc_cat=0&oh=db97a9950eade94d765d2b566ff92fbc&oe=5BE17354">
-					<h2>¾È³çÇÏ¼¼¿ä. ¾È´ëÇõÀÇ  mysite¿¡ ¿À½Å °ÍÀ» È¯¿µÇÕ´Ï´Ù.</h2>
+					<h2>ì•ˆë…•í•˜ì„¸ìš”. ì•ˆëŒ€í˜ì˜  mysiteì— ì˜¤ì‹  ê²ƒì„ í™˜ì˜í•©ë‹ˆë‹¤.</h2>
 					<p>
-						ÀÌ »çÀÌÆ®´Â  À¥ ÇÁ·Î±×·¥¹Ö ½Ç½À°úÁ¦ ¿¹Á¦ »çÀÌÆ®ÀÔ´Ï´Ù.<br>
-						¸Þ´º´Â  »çÀÌÆ® ¼Ò°³, ¹æ¸í·Ï, °Ô½ÃÆÇÀÌ ÀÖ±¸¿ä. Python ¼ö¾÷ + µ¥ÀÌÅÍº£ÀÌ½º ¼ö¾÷ + À¥ÇÁ·Î±×·¡¹Ö ¼ö¾÷ ¹è¿î °Å ÀÖ´Â°Å ¾ø´Â °Å ´Ù ÇÕÃÄ¼­
-						¸¸µé¾î ³õÀº »çÀÌÆ® ÀÔ´Ï´Ù.<br><br>
-						<a href="#">¹æ¸í·Ï</a>¿¡ ±Û ³²±â±â<br>
+						ì´ ì‚¬ì´íŠ¸ëŠ”  ì›¹ í”„ë¡œê·¸ëž¨ë° ì‹¤ìŠµê³¼ì œ ì˜ˆì œ ì‚¬ì´íŠ¸ìž…ë‹ˆë‹¤.<br>
+						ë©”ë‰´ëŠ”  ì‚¬ì´íŠ¸ ì†Œê°œ, ë°©ëª…ë¡, ê²Œì‹œíŒì´ ìžˆêµ¬ìš”. Python ìˆ˜ì—… + ë°ì´í„°ë² ì´ìŠ¤ ìˆ˜ì—… + ì›¹í”„ë¡œê·¸ëž˜ë° ìˆ˜ì—… ë°°ìš´ ê±° ìžˆëŠ”ê±° ì—†ëŠ” ê±° ë‹¤ í•©ì³ì„œ
+						ë§Œë“¤ì–´ ë†“ì€ ì‚¬ì´íŠ¸ ìž…ë‹ˆë‹¤.<br><br>
+						<a href="<%=request.getContextPath()%>/guestbook">ë°©ëª…ë¡</a>ì— ê¸€ ë‚¨ê¸°ê¸°<br>
 					</p>
 				</div>
 			</div>
 		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="">¾È´ëÇõ</a></li>
-				<li><a href="">¹æ¸í·Ï</a></li>
-				<li><a href="">°Ô½ÃÆÇ</a></li>
-			</ul>
-		</div>
-		<div id="footer">
-			<p>(c)opyright 2015, 2016, 2017, 2018</p>
-		</div>
+		<jsp:include page="/WEB-INF/views/includes/navigation.jsp"/>
+		<jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
 </html>

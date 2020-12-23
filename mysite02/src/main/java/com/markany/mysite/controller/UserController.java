@@ -6,32 +6,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.markany.mysite.mvc.main.MainActionFactory;
+import com.markany.mysite.mvc.user.UserActionFactory;
 import com.markany.web.mvc.Action;
 import com.markany.web.mvc.ActionFactory;
-import com.markany.web.util.WebUtil;
 
-public class MainController extends HttpServlet {
+public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String actionName = request.getParameter("a");
 		
-		ActionFactory actionFactory = new MainActionFactory();
+		ActionFactory actionFactory = new UserActionFactory();
 		Action action = actionFactory.getAction(actionName);
 		action.execute(request, response);
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
 }
-
-
-/*
- * url mapping을 mysite02/main이 아니라
- * mysite02/ 로만 하고싶어서 url pattern을 /로만 하고싶어서 바꾸게되면
- * CSS나 사진이 안먹음 왜? css의 경로도 maincontroller가 다 받아버려서!!
- */
