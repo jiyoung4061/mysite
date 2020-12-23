@@ -15,13 +15,16 @@ public class UserRepository {
 
 		Connection conn = null;
 		ResultSet rs = null;
-		Statement stmt = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			conn = getConnection(); // sqlexception 여기서 처리
 			// 3-1. SQL 준비
-			String sql = "select no, name " + "from user " + "where email=?" + " and password = ?";
+			String sql = 
+					" select no, name " + 
+					" from user " + 
+					" where email=?" + 
+					" and password = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩
@@ -30,7 +33,9 @@ public class UserRepository {
 
 			// 5. sql문 실행
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			
+			// 6. 데이터 가져오기
+			if (rs.next()) { // 한개 나오니까 if!
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
 
@@ -43,8 +48,8 @@ public class UserRepository {
 		} finally {
 			try {
 				// 3. 자원정리
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
 				}
 			} catch (SQLException e) {
 				System.out.println("error:" + e);

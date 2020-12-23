@@ -101,7 +101,6 @@ public class GuestBookRepository {
 		return result;
 	}
 	
-	
 	public boolean delete(String no, String password) {
 		boolean result = false;
 		Connection conn = null;
@@ -133,6 +132,7 @@ public class GuestBookRepository {
 		}
 		return result;
 	}
+	
 	private Connection getConnection() throws SQLException{
 		Connection conn = null;
 		try {

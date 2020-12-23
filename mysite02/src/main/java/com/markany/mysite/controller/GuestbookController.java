@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.markany.mysite.mvc.guestbook.GuestbookActionFactory;
 import com.markany.web.mvc.Action;
 import com.markany.web.mvc.ActionFactory;
 
@@ -16,10 +17,10 @@ public class GuestbookController extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String actionName = request.getParameter("a");
-		
-//		ActionFactory actionFactory = new GuestbookActionFactory();
-//		Action action = actionFactory.getAction(actionName);
-//		action.execute(request, response);
+
+		ActionFactory actionFactory = new GuestbookActionFactory();
+		Action action = actionFactory.getAction(actionName);
+		action.execute(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
