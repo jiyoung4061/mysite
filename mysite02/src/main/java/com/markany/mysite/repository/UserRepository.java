@@ -34,8 +34,9 @@ public class UserRepository {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
 
-				vo.setNo(no);
-				vo.setName(name);
+				userVo = new UserVo();
+				userVo.setNo(no);
+				userVo.setName(name);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -63,7 +64,7 @@ public class UserRepository {
 				}
 			}
 		}
-		return vo;
+		return userVo;
 	}
 
 	public boolean insert(UserVo userVo) {

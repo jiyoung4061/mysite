@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.markany.mysite.mvc.main.MainActionFactory;
 import com.markany.web.mvc.Action;
 import com.markany.web.mvc.ActionFactory;
-import com.markany.web.util.WebUtil;
 
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -6,9 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.markany.mysite.vo.UserVo;
 import com.markany.web.mvc.Action;
 import com.markany.web.util.WebUtil;
 
@@ -34,9 +31,6 @@ public class MainAction implements Action {
 		cookie.setMaxAge(24*60*60); // 하루
 		response.addCookie(cookie);
 		
-//		HttpSession session = request.getSession(false);
-//		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		
-		WebUtil.forward(request, response, "/WEB-INF/views/main/index.jsp"); // forward의 request, response가 jsp의 req, resp임															// request, response임!
+		WebUtil.forward(request, response, "/WEB-INF/views/main/index.jsp");
 	}
 }
