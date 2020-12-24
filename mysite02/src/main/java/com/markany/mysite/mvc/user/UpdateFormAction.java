@@ -7,12 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.markany.web.mvc.Action;
+import com.markany.web.util.WebUtil;
 
 public class UpdateFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1. session에서 authUser 가져오기
+		// 2. authUser에서 no가져오기
+		// 3. no를 가지고 Repository를 통해 UserVo 가져오기
+		// 4. jsp로 UserVo 전달하면서 forwarding하기
 		
+		WebUtil.forward(request, response, "/WEB-INF/views/user/updateform.jsp");
 	}
 
 }
