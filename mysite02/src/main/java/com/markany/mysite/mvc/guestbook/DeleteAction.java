@@ -6,14 +6,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.markany.mysite.repository.GuestBookRepository;
 import com.markany.web.mvc.Action;
 import com.markany.web.util.WebUtil;
 
-public class DeleteFormAction implements Action {
+public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("no", request.getParameter("no"));
-		WebUtil.forward(request, response, "WEB-INF/views/guestbook/deleteform.jsp");
+		String no = request.getParameter("no");
+		String password = request.getParameter("password");
+		
+		new GuestBookRepository().delete(no, password);
+		WebUtil.redirect(request, response, request.getContextPath()+"/guestbook?a=list");
 	}
+
 }

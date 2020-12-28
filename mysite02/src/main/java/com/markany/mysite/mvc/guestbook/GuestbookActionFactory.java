@@ -9,13 +9,14 @@ public class GuestbookActionFactory extends ActionFactory {
 	@Override
 	public Action getAction(String actionName) {
 		Action action = null;
-		System.out.println("실행되나");
 		if("deleteform".equals(actionName)) {
 			action = new DeleteFormAction();
 		} else if("list".equals(actionName)) {
 			action = new ListAction();
 		} else if("add".equals(actionName)) {
 			action = new AddAction();
+		} else if("delete".equals(actionName)) {
+			action = new DeleteAction();
 		} else {
 			action = new MainAction();
 		}

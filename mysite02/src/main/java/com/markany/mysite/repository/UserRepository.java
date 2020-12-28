@@ -5,11 +5,68 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.markany.mysite.vo.UserVo;
 
 public class UserRepository {
+	
+	public UserVo findByNo(Long userNo) {
+		UserVo userVo = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			
+			// 3. SQL 준비
+			String sql =
+				" select no, name, email, gender" +
+				" from user" +
+				" where no=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			// 4. 바인딩
+			pstmt.setLong(1, userNo);
+			
+			// 5. sql문 실행
+			rs = pstmt.executeQuery();
+			
+			// 6. 데이터 가져오기
+			if(rs.next()) {
+				Long no = rs.getLong(1);
+				String name = rs.getString(2);
+				String email = rs.getString(3);
+				String gender = rs.getString(4);
+				
+				userVo = new UserVo();
+				userVo.setNo(no);
+				userVo.setName(name);
+				userVo.setEmail(email);
+				userVo.setGender(gender);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 3. 자원정리
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		
+		return userVo;		
+	}
+	
 	public UserVo findByEmailAndPassword(UserVo vo) {
 		UserVo userVo = null;
 
@@ -75,7 +132,6 @@ public class UserRepository {
 	public boolean insert(UserVo userVo) {
 		boolean result = false;
 		Connection conn = null;
-		Statement stmt = null;
 		PreparedStatement pstmt = null;
 
 		try {
@@ -99,8 +155,8 @@ public class UserRepository {
 		} finally {
 			try {
 				// 3. 자원정리
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
 				}
 				if (conn != null) {
 					conn.close();
@@ -112,6 +168,53 @@ public class UserRepository {
 		return result;
 	}
 
+	public boolean update(UserVo vo) {
+		boolean result = false;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			
+			if(vo.getPassword()== null || "".equals(vo.getPassword())) {
+				String sql =" update user set name=?, gender=? where no=?";
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getGender());
+				pstmt.setLong(3, vo.getNo());
+				
+			} else {
+				String sql =" update user set name=?, password=? , gender=? where no=?";
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getPassword());
+				pstmt.setString(3, vo.getGender());
+				pstmt.setLong(4, vo.getNo());
+			}
+			
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 3. 자원정리
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return result;		
+	}
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {

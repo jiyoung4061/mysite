@@ -8,7 +8,6 @@ public class UserVo {
 	private String gender;
 	private String joinDate;
 	
-	
 	public Long getNo() {
 		return no;
 	}

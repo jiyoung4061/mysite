@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.markany.mysite.repository.GuestBookRepository;
 import com.markany.mysite.vo.GuestBookVo;
 import com.markany.web.mvc.Action;
+import com.markany.web.util.WebUtil;
 
 public class AddAction implements Action {
 
@@ -26,7 +27,7 @@ public class AddAction implements Action {
 		vo.setReg_date(reg_date);
 
 		new GuestBookRepository().insert(vo);
-		response.sendRedirect(request.getContextPath()+"/gb");
+		WebUtil.redirect(request, response, request.getContextPath()+"/guestbook?a=list");
 	}
 
 }

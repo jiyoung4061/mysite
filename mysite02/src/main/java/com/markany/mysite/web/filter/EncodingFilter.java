@@ -13,29 +13,24 @@ import javax.servlet.ServletResponse;
  */
 public class EncodingFilter implements Filter {
 	private String encoding;
+	
 	public void init(FilterConfig fConfig) throws ServletException {
 		encoding = fConfig.getInitParameter("encoding");
 		if(null == encoding) {
 			encoding = "utf-8";
 		}
 	}
-
-    public EncodingFilter() {
-        // TODO Auto-generated constructor stub
-    	
-    }
-
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
+	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// request 처리
 		request.setCharacterEncoding(encoding);
-
 		chain.doFilter(request, response);
-
 		// response 처리
+		
+	}
 
+	public void destroy() {
+		// TODO Auto-generated method stub
 	}
 
 	
