@@ -3,7 +3,7 @@ package com.markany.mysite.vo;
 public class BoardVo {
 	private Long no;
 	private String title;
-	private String cntents;
+	private String contents;
 	private String regDate;
 	private Long hit;
 	
@@ -26,11 +26,11 @@ public class BoardVo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getCntents() {
-		return cntents;
+	public String getContents() {
+		return contents;
 	}
-	public void setCntents(String cntents) {
-		this.cntents = cntents;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 	public String getRegDate() {
 		return regDate;
@@ -76,7 +76,7 @@ public class BoardVo {
 	}
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", cntents=" + cntents + ", regDate=" + regDate + ", hit="
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate + ", hit="
 				+ hit + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userName=" + userName
 				+ ", userNo=" + userNo + "]";
 	}
