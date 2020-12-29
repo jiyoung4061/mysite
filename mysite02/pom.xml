@@ -9,12 +9,15 @@
 	</parent>
 	<artifactId>mysite02</artifactId>
 	<packaging>war</packaging>
+	
 	<dependencies>
+		<!-- mariadb jdbc driver -->
 		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
-			<version>2.4.4</version>
+		    <groupId>org.mariadb.jdbc</groupId>
+		    <artifactId>mariadb-java-client</artifactId>
+		    <version>2.4.4</version>
 		</dependency>
+		
 		<!-- jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -73,7 +76,7 @@
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>
-			</plugin>
+			</plugin>			
 		</plugins>
 	</build>
 </project>
