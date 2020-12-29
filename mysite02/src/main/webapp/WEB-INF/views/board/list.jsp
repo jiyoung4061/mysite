@@ -34,7 +34,7 @@
 						<tr>
 							<td>${vo.getNo() }</td>
 							<td style='text-align:left; padding-left:${(vo.depth-1)*20}px'><a
-								href="">${vo.getTitle() }</a></td>
+								href="${pageContext.request.contextPath }/board?a=viewform&no=${vo.getNo()}">${vo.getTitle() }</a></td>
 							<td>${vo.getUserName() }</td>
 							<td>${vo.getHit() }</td>
 							<td>${vo.getRegDate() }</td>
@@ -63,9 +63,7 @@
 				</div>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp">
-			<c:param name="menu" value="board" />
-		</c:import>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>

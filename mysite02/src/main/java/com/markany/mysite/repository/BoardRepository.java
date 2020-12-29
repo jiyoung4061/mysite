@@ -108,6 +108,58 @@ public class BoardRepository {
 		return result;
 	}
 	
+	public BoardVo findByNo(Long boardNo) {
+		BoardVo vo = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			
+			// 3. SQL 준비
+			String sql =
+				" select title, contents" +
+				" from board" +
+				" where no=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			// 4. 바인딩
+			pstmt.setLong(1, boardNo);
+			
+			// 5. sql문 실행
+			rs = pstmt.executeQuery();
+			
+			// 6. 데이터 가져오기
+			if(rs.next()) {
+				String title = rs.getString(1);
+				String contents = rs.getString(2);
+				
+				vo = new BoardVo();
+				vo.setTitle(title);
+				vo.setContents(contents);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 3. 자원정리
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return vo;		
+	}
+		
 //	public boolean delete(String no, String password) {
 //		boolean result = false;
 //		Connection conn = null;

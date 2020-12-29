@@ -15,6 +15,10 @@ public class BoardActionFactory extends ActionFactory {
 			action = new AddFormAction();
 		} else if("add".equals(actionName)) {
 			action = new AddAction();
+		} else if("viewform".equals(actionName)) {
+			action = new ViewFormAction();
+		} else if("modifyform".equals(actionName)) {
+			action = new ModifyFormAction();
 		} else {
 			action = new MainAction();
 		}
