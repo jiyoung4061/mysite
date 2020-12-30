@@ -1,4 +1,13 @@
-desc user;
+desc board;
+
+delete from user where gender = 'female';
+
+select * from user;
+
+
+
+-- 전체회원 보기: select
+select * from board;
 
 -- 회원가입: insert
 insert into user values(null, '안대혁', 'kickscar@gmail.com', '1234', 'male', now());

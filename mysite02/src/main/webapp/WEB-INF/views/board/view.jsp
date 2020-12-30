@@ -36,8 +36,12 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?a=list">글목록</a>
-					<c:if test="${authUser.getNo() == vo.getUserNo()}">
-						<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.getNo()}">글수정</a>
+					<c:if test="${not empty authUser}">
+						<a href="${pageContext.request.contextPath }/board?a=list">댓글쓰기</a>
+						<c:if test="${authUser.getNo() == vo.getUserNo()}">
+							<a
+								href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.getNo()}">글수정</a>
+						</c:if>
 					</c:if>
 				</div>
 			</div>

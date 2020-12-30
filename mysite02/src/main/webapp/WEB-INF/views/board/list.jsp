@@ -38,10 +38,12 @@
 							<td>${vo.getUserName() }</td>
 							<td>${vo.getHit() }</td>
 							<td>${vo.getRegDate() }</td>
-							<td><a href="" class="del">삭제</a></td>
+							<c:if test="${authUser.getNo() == vo.getUserNo() }">
+								<td><a href="${pageContext.request.contextPath }/board?a=deleteform&no=${vo.getNo()}" class="del">삭제</a></td>
+							</c:if>
 						</tr>
 					</c:forEach>
-					
+
 				</table>
 
 				<!-- pager 추가 -->
@@ -58,12 +60,15 @@
 				</div>
 				<!-- pager 추가 -->
 
+				<c:if test="${not empty authUser }" >
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=addform" id="new-book">글쓰기</a>
+					<a href="${pageContext.request.contextPath }/board?a=addform"
+						id="new-book">글쓰기</a>
 				</div>
+				</c:if>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>

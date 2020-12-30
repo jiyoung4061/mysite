@@ -24,7 +24,7 @@ public class ModifyAction implements Action {
 		vo.setTitle(title);
 		vo.setNo(no);
 		
-		new BoardRepository().updateByNo(vo);
+		new BoardRepository().updateByVo(vo, "modify");
 		WebUtil.redirect(request, response, request.getContextPath()+"/board?a=viewform&no="+vo.getNo());
 		
 	}

@@ -15,7 +15,8 @@ public class MainController extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-//		String configPath = getServletConfig().getInitParameter("config"); //spring제공하는 servlet에서 사용
+		String configPath = getServletConfig().getInitParameter("config"); //spring제공하는 servlet에서 사용
+//		new XMLPathApplicationContext(configPath); // configpath설정안하면 servletName+"-context.xml"로 
 		super.init();
 	}
 
@@ -26,6 +27,7 @@ public class MainController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		request.getRequestURI()
 		String actionName = request.getParameter("a");		
 
 		ActionFactory actionFactory = new MainActionFactory();
