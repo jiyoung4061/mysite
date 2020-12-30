@@ -20,6 +20,7 @@ public class AddFormAction implements Action {
 		if (authUser == null) {
 			WebUtil.redirect(request, response, request.getContextPath()+"/board?a=list");
 		} else {
+			request.setAttribute("no", request.getParameter("no"));
 			WebUtil.forward(request, response, "WEB-INF/views/board/write.jsp");
 		}
 	}

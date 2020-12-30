@@ -21,7 +21,7 @@ public class BoardRepository {
 
 		try {
 			conn = getConnection();
-			String sql = "  select a.no, a.title, date_format(a.reg_date, \"%Y/%m/%d\"), a.hit, b.name, b.no "
+			String sql = "  select a.no, a.title, date_format(a.reg_date, \"%Y/%m/%d\"), a.hit, b.name, b.no, a.depth "
 					+ " from board a, user b " + " where a.user_no = b.no "
 					+ " order by a.group_no desc, a.order_no asc ";
 			pstmt = conn.prepareStatement(sql);
@@ -34,6 +34,7 @@ public class BoardRepository {
 				Long hit = rs.getLong(4);
 				String userName = rs.getString(5);
 				Long userNo = rs.getLong(6);
+				int depth = rs.getInt(7);
 
 				BoardVo vo = new BoardVo();
 				vo.setNo(no);
@@ -42,6 +43,7 @@ public class BoardRepository {
 				vo.setUserName(userName);
 				vo.setRegDate(regDate);
 				vo.setUserNo(userNo);
+				vo.setDepth(depth);
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -68,27 +70,19 @@ public class BoardRepository {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
 		try {
 			conn = getConnection();
 			// 3-1. SQL 준비
-			String sql = "select max(group_no) from board";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			Long maxGroupNo = 0L;
-			if(rs.next()) {
-				maxGroupNo = rs.getLong(1);
-			}
 			
-			sql = " insert " + " into board " + " values (null, ?, ?, now(), ?, ?, ?, ?, ?)";
+			String sql = " insert " + " into board " + " values (null, ?, ?, now(), ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContents());
 			pstmt.setLong(3, vo.getHit());
-			pstmt.setLong(4, maxGroupNo+1);
+			pstmt.setLong(4, vo.getGroupNo());
 			pstmt.setLong(5, vo.getOrderNo());
 			pstmt.setInt(6, vo.getDepth());
 			pstmt.setLong(7, vo.getUserNo());
@@ -126,7 +120,7 @@ public class BoardRepository {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = " select title, contents, no, user_no, hit" + " from board b" + " where no=?";
+			String sql = " select title, contents, no, user_no, hit, group_no, depth, order_no" + " from board b" + " where no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩
@@ -142,6 +136,9 @@ public class BoardRepository {
 				Long no = rs.getLong(3);
 				Long userNo = rs.getLong(4);
 				Long hit = rs.getLong(5);
+				Long groupNo = rs.getLong(6);
+				int depth = rs.getInt(7);
+				int orderNo = rs.getInt(8);
 
 				vo = new BoardVo();
 				vo.setTitle(title);
@@ -149,6 +146,9 @@ public class BoardRepository {
 				vo.setNo(no);
 				vo.setUserNo(userNo);
 				vo.setHit(hit);
+				vo.setGroupNo(groupNo);
+				vo.setDepth(depth);
+				vo.setOrderNo(orderNo);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -251,6 +251,65 @@ public class BoardRepository {
 		return result;
 	}
 
+	public Long findMaxGroupNo() {
+		Long maxGroupNo = 0L;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+			// 3-1. SQL 준비
+			String sql = "select max(group_no) from board";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				maxGroupNo = rs.getLong(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 3. 자원정리
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return maxGroupNo;
+	}
+	
+	public boolean setForOrderNo(BoardVo vo) {
+		boolean result = false;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql = "	update board"
+						+"	set order_no = order_no+1"
+						+"	where group_no = ? and order_no >= ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setLong(1, vo.getGroupNo());
+			pstmt.setLong(2, vo.getOrderNo());
+			int count = pstmt.executeUpdate();
+			
+			result = count >= 1;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {

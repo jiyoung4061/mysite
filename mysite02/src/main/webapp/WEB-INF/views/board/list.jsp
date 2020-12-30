@@ -33,17 +33,23 @@
 					<c:forEach items='${list}' var='vo'>
 						<tr>
 							<td>${vo.getNo() }</td>
-							<td style='text-align:left; padding-left:${(vo.depth-1)*20}px'><a
-								href="${pageContext.request.contextPath }/board?a=viewform&no=${vo.getNo()}">${vo.getTitle() }</a></td>
+							<td style='text-align:left; padding-left:${(vo.depth-1)*20}px'>
+								<c:if test="${vo.depth > 1 }">
+									<img
+										src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
+								</c:if> <a
+								href="${pageContext.request.contextPath }/board?a=viewform&no=${vo.getNo()}">${vo.getTitle() }</a>
+							</td>
 							<td>${vo.getUserName() }</td>
 							<td>${vo.getHit() }</td>
 							<td>${vo.getRegDate() }</td>
 							<c:if test="${authUser.getNo() == vo.getUserNo() }">
-								<td><a href="${pageContext.request.contextPath }/board?a=deleteform&no=${vo.getNo()}" class="del">삭제</a></td>
+								<td><a
+									href="${pageContext.request.contextPath }/board?a=deleteform&no=${vo.getNo()}"
+									class="del">삭제</a></td>
 							</c:if>
 						</tr>
 					</c:forEach>
-
 				</table>
 
 				<!-- pager 추가 -->
@@ -60,11 +66,11 @@
 				</div>
 				<!-- pager 추가 -->
 
-				<c:if test="${not empty authUser }" >
-				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=addform"
-						id="new-book">글쓰기</a>
-				</div>
+				<c:if test="${not empty authUser }">
+					<div class="bottom">
+						<a href="${pageContext.request.contextPath }/board?a=addform"
+							id="new-book">글쓰기</a>
+					</div>
 				</c:if>
 			</div>
 		</div>
