@@ -22,6 +22,7 @@ public class ViewFormAction implements Action {
 		BoardVo vo = new BoardRepository().findByNo(no);
 		new BoardRepository().updateByVo(vo, "hit");
 		request.setAttribute("vo", vo);
+		request.setAttribute("newLine", "\n");
 		WebUtil.forward(request, response, "WEB-INF/views/board/view.jsp");
 	}
 }

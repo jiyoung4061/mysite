@@ -28,8 +28,8 @@
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								<c:set var='newLine' value="\n" />
-								${fn:replace(vo.getContents(), newLine, "<br/>") }
+								
+								${fn:replace(vo.contents, newLine, "<br/>") }
 							</div>
 						</td>
 					</tr>

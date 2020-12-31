@@ -18,6 +18,7 @@ public class ListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<GuestBookVo> list = new GuestBookRepository().findAll();
 		request.setAttribute("list", list);
+		request.setAttribute("newLine", "\n");
 		WebUtil.forward(request, response, "/WEB-INF/views/guestbook/list.jsp");
 	}
 }
