@@ -16,9 +16,19 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<BoardVo> list = new BoardRepository().findAll();
+		String strOfPage = request.getParameter("p");
+		Long page;
+		if(strOfPage == null || "".equals(strOfPage)) {
+			page = 1L;
+		} else {
+			page = Long.valueOf(strOfPage);
+		}
+		List<BoardVo> list = new BoardRepository().findAll(page-1);
+		int maxPage  = (new BoardRepository().countOfBoard()/10) + 1;
 		
 		request.setAttribute("list", list);
+		request.setAttribute("maxPage", maxPage);
+		request.setAttribute("p", page);
 		WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
 	}
 }

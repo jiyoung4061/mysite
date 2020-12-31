@@ -30,7 +30,7 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-						<c:set var="count" value="${fn:length(list) }"/>
+					<c:set var="count" value="${fn:length(list) }" />
 					<c:forEach items='${list}' var='vo' varStatus="status">
 						<tr>
 							<td>${count - status.index}</td>
@@ -56,13 +56,27 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li class="selected">1</li>
-						<li><a href=""></a>2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+							<li>
+								<c:if test="${p != 1 }">
+									<a href="${pageContext.request.contextPath }/board?a=list&p=${p-1}">◀</a>
+								</c:if>
+							</li>
+							<c:forEach begin='1' end='${maxPage }' var='page' step='1'>
+								<c:choose>
+									<c:when test="${p eq page }">
+										<li class="selected"><a href="${pageContext.request.contextPath }/board?a=list&p=${page}">${page }</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="${pageContext.request.contextPath }/board?a=list&p=${page}">${page }</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						
+							<li>
+								<c:if test="${ p < maxPage }">
+									<a href="${pageContext.request.contextPath }/board?a=list&p=${p+1}">▶</a>
+								</c:if>
+							</li>
 					</ul>
 				</div>
 				<!-- pager 추가 -->

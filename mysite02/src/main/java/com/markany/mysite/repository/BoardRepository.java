@@ -12,7 +12,54 @@ import com.markany.mysite.vo.BoardVo;
 
 public class BoardRepository {
 
-	public List<BoardVo> findAll() {
+	public int countOfBoard() {
+		List<BoardVo> list = new ArrayList<>();
+		
+		ResultSet rs = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql = "  select a.no, a.title, date_format(a.reg_date, \"%Y/%m/%d\") "
+					+ " from board a, user b " + " where a.user_no = b.no ";
+			pstmt = conn.prepareStatement(sql);			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String regDate = rs.getString(3);
+
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setRegDate(regDate);
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list.size();
+	}
+	
+	public List<BoardVo> findAll(Long page) {
 		List<BoardVo> list = new ArrayList<>();
 
 		Connection conn = null;
@@ -21,10 +68,14 @@ public class BoardRepository {
 
 		try {
 			conn = getConnection();
+			Long setPage = page * 10;
 			String sql = "  select a.no, a.title, date_format(a.reg_date, \"%Y/%m/%d\"), a.hit, b.name, b.no, a.depth "
 					+ " from board a, user b " + " where a.user_no = b.no "
-					+ " order by a.group_no desc, a.order_no asc ";
+					+ " order by a.group_no desc, a.order_no asc "
+					+ " limit ?,10";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, setPage);
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
