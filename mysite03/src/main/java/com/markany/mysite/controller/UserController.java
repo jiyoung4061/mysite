@@ -98,5 +98,7 @@ public class UserController {
 		userService.updateUser(userVo);		
 		return "redirect:/user/update";
 	}
+	
+
 
 }

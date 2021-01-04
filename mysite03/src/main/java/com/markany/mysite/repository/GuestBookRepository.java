@@ -11,12 +11,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.markany.mysite.exception.GuestbookRepositoryException;
 import com.markany.mysite.vo.GuestBookVo;
 
 @Repository
 public class GuestBookRepository {
 	
-	public List<GuestBookVo> findAll() {
+	public List<GuestBookVo> findAll() throws GuestbookRepositoryException{
 		List<GuestBookVo> list = new ArrayList<>();
 
 		Connection conn = null;
@@ -46,7 +47,7 @@ public class GuestBookRepository {
 				list.add(vo);
 			}
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestbookRepositoryException();
 		} finally {
 			try {
 				if (rs != null) {

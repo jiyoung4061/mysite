@@ -27,5 +27,5 @@
 	</bean>
 	<context:annotation-config />
 	<context:component-scan
-		base-package="com.markany.mysite.controller" />
+		base-package="com.markany.mysite.controller, com.markany.mysite.exception" />
 </beans>

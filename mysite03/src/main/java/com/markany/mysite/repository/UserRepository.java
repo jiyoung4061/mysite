@@ -8,40 +8,38 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.markany.mysite.exception.UserRepositoryException;
 import com.markany.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
-	
+
 	public UserVo findByNo(Long userNo) {
 		UserVo userVo = null;
-		
+
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			
+
 			// 3. SQL 준비
-			String sql =
-				" select no, name, email, gender" +
-				" from user" +
-				" where no=?";
+			String sql = " select no, name, email, gender" + " from user" + " where no=?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			// 4. 바인딩
 			pstmt.setLong(1, userNo);
-			
+
 			// 5. sql문 실행
 			rs = pstmt.executeQuery();
-			
+
 			// 6. 데이터 가져오기
-			if(rs.next()) {
+			if (rs.next()) {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
 				String email = rs.getString(3);
 				String gender = rs.getString(4);
-				
+
 				userVo = new UserVo();
 				userVo.setNo(no);
 				userVo.setName(name);
@@ -53,23 +51,23 @@ public class UserRepository {
 		} finally {
 			try {
 				// 3. 자원정리
-				if(rs != null) {
+				if (rs != null) {
 					rs.close();
 				}
-				if(pstmt != null) {
+				if (pstmt != null) {
 					pstmt.close();
 				}
-				if(conn != null) {
+				if (conn != null) {
 					conn.close();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}		
-		
-		return userVo;		
+		}
+
+		return userVo;
 	}
-	
+
 	public UserVo findByEmailAndPassword(UserVo vo) {
 		UserVo userVo = null;
 
@@ -80,11 +78,7 @@ public class UserRepository {
 		try {
 			conn = getConnection(); // sqlexception 여기서 처리
 			// 3-1. SQL 준비
-			String sql = 
-					" select no, name " + 
-					" from user " + 
-					" where email=?" + 
-					" and password = ?";
+			String sql = " select no, name " + " from user " + " where email=?" + " and password = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩
@@ -93,7 +87,7 @@ public class UserRepository {
 
 			// 5. sql문 실행
 			rs = pstmt.executeQuery();
-			
+
 			// 6. 데이터 가져오기
 			if (rs.next()) { // 한개 나오니까 if!
 				Long no = rs.getLong(1);
@@ -132,7 +126,7 @@ public class UserRepository {
 		return userVo;
 	}
 
-	public int insert(UserVo userVo) {
+	public int insert(UserVo userVo) throws UserRepositoryException {
 		int count = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -150,7 +144,44 @@ public class UserRepository {
 			pstmt.setString(4, userVo.getGender());
 			// 5. sql문 실행
 			count = pstmt.executeUpdate();
+			
+			// 6. 자원 정리
+			pstmt.close();
+			conn.close();
+		} catch (SQLException ex) {
+			throw new UserRepositoryException();
+		}
+		return count;
+	}
 
+	public int update(UserVo vo) {
+		int count = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+
+			if (vo.getPassword() == null || "".equals(vo.getPassword())) {
+				String sql = " update user set name=?, gender=? where no=?";
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getGender());
+				pstmt.setLong(3, vo.getNo());
+
+			} else {
+				String sql = " update user set name=?, password=? , gender=? where no=?";
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getPassword());
+				pstmt.setString(3, vo.getGender());
+				pstmt.setLong(4, vo.getNo());
+			}
+
+			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
@@ -169,52 +200,6 @@ public class UserRepository {
 		return count;
 	}
 
-	public int update(UserVo vo) {
-		int count = 0;
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn = getConnection();
-			
-			if(vo.getPassword()== null || "".equals(vo.getPassword())) {
-				String sql =" update user set name=?, gender=? where no=?";
-				pstmt = conn.prepareStatement(sql);
-			
-				pstmt.setString(1, vo.getName());
-				pstmt.setString(2, vo.getGender());
-				pstmt.setLong(3, vo.getNo());
-				
-			} else {
-				String sql =" update user set name=?, password=? , gender=? where no=?";
-				pstmt = conn.prepareStatement(sql);
-			
-				pstmt.setString(1, vo.getName());
-				pstmt.setString(2, vo.getPassword());
-				pstmt.setString(3, vo.getGender());
-				pstmt.setLong(4, vo.getNo());
-			}
-			
-			count = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				// 3. 자원정리
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}		
-		return count;		
-	}
-	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
