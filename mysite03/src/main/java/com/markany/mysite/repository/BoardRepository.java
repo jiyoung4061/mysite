@@ -8,11 +8,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.markany.mysite.vo.BoardVo;
 
+@Repository
 public class BoardRepository {
 
-	public List<BoardVo> findAll(Long page) {
+	public List<BoardVo> findAll() {
 		List<BoardVo> list = new ArrayList<>();
 
 		Connection conn = null;
@@ -21,13 +24,10 @@ public class BoardRepository {
 
 		try {
 			conn = getConnection();
-			Long setPage = page * 10;
 			String sql = "  select a.no, a.title, date_format(a.reg_date, \"%Y/%m/%d\"), a.hit, b.name, b.no, a.depth "
 					+ " from board a, user b " + " where a.user_no = b.no "
-					+ " order by a.group_no desc, a.order_no asc "
-					+ " limit ?,10";
+					+ " order by a.group_no desc, a.order_no asc ";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setLong(1, setPage);
 			
 			rs = pstmt.executeQuery();
 

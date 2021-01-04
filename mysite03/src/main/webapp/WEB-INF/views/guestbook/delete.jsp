@@ -22,7 +22,7 @@
 					<input type="password" name="password"> <input
 						type="submit" value="확인">
 				</form>
-				<a href="${pageContext.request.contextPath }/guestbook?a=list">방명록
+				<a href="${pageContext.request.contextPath }/guestbook">방명록
 					리스트</a>
 			</div>
 		</div>

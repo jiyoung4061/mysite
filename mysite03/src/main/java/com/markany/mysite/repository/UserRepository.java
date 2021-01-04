@@ -14,7 +14,7 @@ import com.markany.mysite.vo.UserVo;
 @Repository
 public class UserRepository {
 
-	public UserVo findByNo(Long userNo) {
+	public UserVo findByNo(Long userNo) throws UserRepositoryException{
 		UserVo userVo = null;
 
 		Connection conn = null;
@@ -46,29 +46,17 @@ public class UserRepository {
 				userVo.setEmail(email);
 				userVo.setGender(gender);
 			}
+			
+			rs.close();
+			pstmt.close();
+			conn.close();
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				// 3. 자원정리
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
+			throw new UserRepositoryException();
+		} 
 		return userVo;
 	}
 
-	public UserVo findByEmailAndPassword(UserVo vo) {
+	public UserVo findByEmailAndPassword(UserVo vo) throws UserRepositoryException {
 		UserVo userVo = null;
 
 		Connection conn = null;
@@ -97,32 +85,12 @@ public class UserRepository {
 				userVo.setNo(no);
 				userVo.setName(name);
 			}
+			pstmt.close();
+			rs.close();
+			conn.close();
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				// 3. 자원정리
-				if (pstmt != null) {
-					pstmt.close();
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			} finally {
-				try {
-					if (rs != null) {
-						rs.close();
-					}
-					if (pstmt != null) {
-						pstmt.close();
-					}
-					if (conn != null) {
-						conn.close();
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+			throw new UserRepositoryException();
+		} 
 		return userVo;
 	}
 
@@ -154,7 +122,7 @@ public class UserRepository {
 		return count;
 	}
 
-	public int update(UserVo vo) {
+	public int update(UserVo vo) throws UserRepositoryException {
 		int count = 0;
 
 		Connection conn = null;
@@ -182,21 +150,11 @@ public class UserRepository {
 			}
 
 			count = pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				// 3. 자원정리
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+			throw new UserRepositoryException();
+		} 
 		return count;
 	}
 

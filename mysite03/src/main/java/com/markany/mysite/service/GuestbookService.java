@@ -18,12 +18,14 @@ public class GuestbookService {
 		return guestbookRepository.findAll();
 	}
 
-	public void writeMessage(GuestBookVo vo) {
-		guestbookRepository.insert(vo);
+	public boolean writeMessage(GuestBookVo vo) {
+		int count = guestbookRepository.insert(vo);
+		return count == 1;
 	}
 
-	public void deleteMessage(GuestBookVo vo) {
-		guestbookRepository.delete(vo);
+	public boolean deleteMessage(GuestBookVo vo) {
+		int count = guestbookRepository.delete(vo);
+		return count == 1;
 	}
 	
 	

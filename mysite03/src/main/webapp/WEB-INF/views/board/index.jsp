@@ -17,7 +17,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board?a=search" method="post">
+				<form id="search_form"
+					action="${pageContext.request.contextPath }/board/search"
+					method="post">
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -55,36 +57,28 @@
 
 				<!-- pager 추가 -->
 				<div class="pager">
-				<c:choose>
-				<c:when test="${pagename eq 'search'}">
-					<c:set var="action" value="search"/>
-				</c:when>
-				<c:otherwise>
-					<c:set var="action" value="list"/>
-				</c:otherwise>
-				</c:choose>
 					<ul>
-							<li>
-								<c:if test="${p != 1 }">
-									<a href="${pageContext.request.contextPath }/board?a=${action }&p=${p-1}">◀</a>
-								</c:if>
-							</li>
-							<c:forEach begin='1' end='${maxPage }' var='page' step='1'>
-								<c:choose>
-									<c:when test="${p eq page }">
-										<li class="selected"><a href="${pageContext.request.contextPath }/board?a=${action }&p=${page}">${page }</a></li>
-									</c:when>
-									<c:otherwise>
-										<li><a href="${pageContext.request.contextPath }/board?a=${action }&p=${page}">${page }</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						
-							<li>
-								<c:if test="${ p < maxPage }">
-									<a href="${pageContext.request.contextPath }/board?a=list&p=${p+1}">▶</a>
-								</c:if>
-							</li>
+						<li><c:if test="${p != 1 }">
+								<a
+									href="${pageContext.request.contextPath }/board/${p-1}">◀</a>
+							</c:if></li>
+						<c:forEach begin='1' end='${maxPage }' var='page' step='1'>
+							<c:choose>
+								<c:when test="${p eq page }">
+									<li class="selected"><a
+										href="${pageContext.request.contextPath }/board?a=${action }&p=${page}">${page }</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="${pageContext.request.contextPath }/board?a=${action }&p=${page}">${page }</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+
+						<li><c:if test="${ p < maxPage }">
+								<a
+									href="${pageContext.request.contextPath }/board?a=list&p=${p+1}">▶</a>
+							</c:if></li>
 					</ul>
 				</div>
 				<!-- pager 추가 -->

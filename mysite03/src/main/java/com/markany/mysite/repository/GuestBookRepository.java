@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,11 +65,10 @@ public class GuestBookRepository {
 		return list;
 	}
 
-	public boolean insert(GuestBookVo vo) {
-		boolean result = false;
+	public int insert(GuestBookVo vo) throws GuestbookRepositoryException{
 		Connection conn = null;
-		Statement stmt = null;
 		PreparedStatement pstmt = null;
+		int count = 0; 
 
 		try {
 			conn = getConnection(); // sqlexception 여기서 처리
@@ -84,58 +82,34 @@ public class GuestBookRepository {
 			pstmt.setString(3, vo.getMessage());
 
 			// 5. sql문 실행
-			int count = pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
 
-			result = count == 1;
-
+			pstmt.close();
+			conn.close();
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				// 3. 자원정리
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			throw new GuestbookRepositoryException();
 		}
-		return result;
+		return count;
 	}
 	
-	public boolean delete(GuestBookVo vo) {
-		boolean result = false;
+	public int delete(GuestBookVo vo) throws GuestbookRepositoryException{
 		Connection conn = null;
-		Statement stmt = null;
 		PreparedStatement pstmt = null;
+		int count = 0;
 
 		try {
 			conn = getConnection(); 
 			// delete from guestbook where no=10 and password = '1234'
 			String sql = " delete " + " from guestbook " + " where no="+vo.getNo()+" and password= '"+vo.getPassword()+"'";
 			pstmt = conn.prepareStatement(sql);
-			int count = pstmt.executeUpdate();
-			result = count == 1;
+			count = pstmt.executeUpdate();
 
+			pstmt.close();
+			conn.close();
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				// 3. 자원정리
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
+			throw new GuestbookRepositoryException();
+		} 
+		return count;
 	}
 	
 	private Connection getConnection() throws SQLException{
