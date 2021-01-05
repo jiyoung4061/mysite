@@ -1,13 +1,15 @@
 package com.markany.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.markany.mysite.exception.GuestbookRepositoryException;
@@ -15,6 +17,9 @@ import com.markany.mysite.vo.GuestBookVo;
 
 @Repository
 public class GuestBookRepository {
+	
+	@Autowired
+	private DataSource dataSource;
 	
 	public List<GuestBookVo> findAll() throws GuestbookRepositoryException{
 		List<GuestBookVo> list = new ArrayList<>();
@@ -24,7 +29,7 @@ public class GuestBookRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = " select no, name, password, message, reg_date " + " from guestbook " + " order by no desc ";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -71,7 +76,7 @@ public class GuestBookRepository {
 		int count = 0; 
 
 		try {
-			conn = getConnection(); // sqlexception 여기서 처리
+			conn = dataSource.getConnection(); // sqlexception 여기서 처리
 			// 3-1. SQL 준비
 			String sql = " insert " + " into guestbook " + " values(null, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
@@ -98,7 +103,7 @@ public class GuestBookRepository {
 		int count = 0;
 
 		try {
-			conn = getConnection(); 
+			conn = dataSource.getConnection(); 
 			// delete from guestbook where no=10 and password = '1234'
 			String sql = " delete " + " from guestbook " + " where no="+vo.getNo()+" and password= '"+vo.getPassword()+"'";
 			pstmt = conn.prepareStatement(sql);
@@ -112,17 +117,5 @@ public class GuestBookRepository {
 		return count;
 	}
 	
-	private Connection getConnection() throws SQLException{
-		Connection conn = null;
-		try {
-		Class.forName("org.mariadb.jdbc.Driver");
-
-		// 2. 연결하기-> driverManager 클래스
-		String url = "jdbc:mysql://192.168.90.219:3307/webdb?characterEncoding=utf8";
-		conn = DriverManager.getConnection(url, "webdb", "apfhd123"); // webdb, password
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		} 
-		return conn;
-	}
+	
 }

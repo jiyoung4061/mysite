@@ -1,11 +1,13 @@
 package com.markany.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.markany.mysite.exception.UserRepositoryException;
@@ -13,7 +15,10 @@ import com.markany.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
-
+	
+	@Autowired
+	private DataSource dataSource;
+	
 	public UserVo findByNo(Long userNo) throws UserRepositoryException{
 		UserVo userVo = null;
 
@@ -21,7 +26,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. SQL 준비
 			String sql = " select no, name, email, gender" + " from user" + " where no=?";
@@ -64,7 +69,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection(); // sqlexception 여기서 처리
+			conn = dataSource.getConnection(); // sqlexception 여기서 처리
 			// 3-1. SQL 준비
 			String sql = " select no, name " + " from user " + " where email=?" + " and password = ?";
 			pstmt = conn.prepareStatement(sql);
@@ -100,7 +105,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection(); // sqlexception 여기서 처리
+			conn = dataSource.getConnection(); // sqlexception 여기서 처리
 			// 3-1. SQL 준비
 			String sql = "insert" + " into user" + " values(null, ?, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
@@ -129,7 +134,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			if (vo.getPassword() == null || "".equals(vo.getPassword())) {
 				String sql = " update user set name=?, gender=? where no=?";
@@ -156,19 +161,5 @@ public class UserRepository {
 			throw new UserRepositoryException();
 		} 
 		return count;
-	}
-
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			// 2. 연결하기-> driverManager 클래스
-			String url = "jdbc:mysql://192.168.90.219:3307/webdb?characterEncoding=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "apfhd123"); // webdb, password
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		}
-		return conn;
 	}
 }
