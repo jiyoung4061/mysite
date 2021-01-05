@@ -18,9 +18,10 @@ public class GuestbookService {
 		return guestbookRepository.findAll();
 	}
 
-	public boolean writeMessage(GuestBookVo vo) {
-		int count = guestbookRepository.insert(vo);
-		return count == 1;
+	public void writeMessage(GuestBookVo vo) {
+		System.out.println("Before--->"+vo);
+		guestbookRepository.insert(vo);
+		System.out.println("After--->"+vo);
 	}
 
 	public boolean deleteMessage(GuestBookVo vo) {

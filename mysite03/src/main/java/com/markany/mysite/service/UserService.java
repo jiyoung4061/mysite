@@ -11,19 +11,16 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public boolean join(UserVo vo) {
-		int count = userRepository.insert(vo);
-		return count == 1;
+	public void join(UserVo vo) {
+		userRepository.insert(vo);
 	}
-
 	public UserVo getUser(UserVo vo) {
+		userRepository.findByEmail(vo.getEmail());
 		return userRepository.findByEmailAndPassword(vo);
 	}
-
 	public UserVo getUser(Long no) {
 		return userRepository.findByNo(no);
 	}
-
 	public boolean updateUser(UserVo vo) {
 		int count = userRepository.update(vo);
 		return count == 1;
