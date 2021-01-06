@@ -16,6 +16,23 @@
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
 
+	<!-- Interceptors -->
+	<mvc:interceptors>
+<!-- 		
+		<mvc:interceptor>
+			<mvc:mapping path="/board/**" />
+			<bean class="com.markany.mysite.interceptor.MyInterceptor02"/>
+		</mvc:interceptor>-->
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.markany.security.LoginInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.markany.security.LogoutInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 	<!-- ViewResolver 설정 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
