@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.markany.mysite.repository.GuestBookRepository;
+import com.markany.mysite.repository.GuestbookRepository;
 import com.markany.mysite.vo.GuestbookVo;
 
 @Service
@@ -15,7 +15,7 @@ public class GuestbookService {
 	private static final Log LOGGER = LogFactory.getLog(GuestbookService.class);
 	
 	@Autowired
-	private GuestBookRepository guestbookRepository;
+	private GuestbookRepository guestbookRepository;
 
 	public List<GuestbookVo> getMessageList() {
 		return guestbookRepository.findAll();

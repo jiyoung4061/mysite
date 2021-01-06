@@ -22,11 +22,12 @@
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
-<!-- 		
+	<!-- 		
 		<mvc:interceptor>
 			<mvc:mapping path="/board/**" />
 			<bean class="com.markany.mysite.interceptor.MyInterceptor02"/>
-		</mvc:interceptor>-->
+		</mvc:interceptor>
+	-->
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth" />
 			<bean class="com.markany.security.LoginInterceptor"/>

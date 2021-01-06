@@ -10,7 +10,7 @@ import com.markany.mysite.exception.GuestbookRepositoryException;
 import com.markany.mysite.vo.GuestbookVo;
 
 @Repository
-public class GuestBookRepository {
+public class GuestbookRepository {
 	
 	@Autowired
 	private SqlSession sqlSession;
