@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.markany.mysite.exception.GuestbookRepositoryException;
-import com.markany.mysite.vo.GuestBookVo;
+import com.markany.mysite.vo.GuestbookVo;
 
 @Repository
 public class GuestBookRepository {
@@ -15,15 +15,15 @@ public class GuestBookRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<GuestBookVo> findAll() {
+	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll");
 	}
 
-	public int insert(GuestBookVo vo){
+	public int insert(GuestbookVo vo){
 		return sqlSession.insert("guestbook.insert", vo);
 	}
 	
-	public int delete(GuestBookVo vo) throws GuestbookRepositoryException{
+	public int delete(GuestbookVo vo) throws GuestbookRepositoryException{
 		return sqlSession.delete("guestbook.delete", vo);
 	}	
 }

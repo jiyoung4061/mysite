@@ -1,6 +1,6 @@
 package com.markany.mysite.vo;
 
-public class GuestBookVo {
+public class GuestbookVo {
 	private long no;
 	private String name;
 	private String password;

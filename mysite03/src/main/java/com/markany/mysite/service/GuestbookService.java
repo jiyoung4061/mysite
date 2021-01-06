@@ -2,32 +2,35 @@ package com.markany.mysite.service;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.markany.mysite.repository.GuestBookRepository;
-import com.markany.mysite.vo.GuestBookVo;
+import com.markany.mysite.vo.GuestbookVo;
 
 @Service
 public class GuestbookService {
+	private static final Log LOGGER = LogFactory.getLog(GuestbookService.class);
 	
 	@Autowired
 	private GuestBookRepository guestbookRepository;
-	
-	public List<GuestBookVo> getMessageList() {
+
+	public List<GuestbookVo> getMessageList() {
 		return guestbookRepository.findAll();
 	}
 
-	public void writeMessage(GuestBookVo vo) {
-		System.out.println("Before--->"+vo);
+	public void writeMessage(GuestbookVo vo) {
+		LOGGER.info("---->before:" + vo);
 		guestbookRepository.insert(vo);
-		System.out.println("After--->"+vo);
+		LOGGER.info("---->after:" + vo);
+//		aristRepository.insert(artistVo);
+//		songVo.setArtistNo(artistNo.getNo());
+//		songRepository.insert(songVo);
 	}
 
-	public boolean deleteMessage(GuestBookVo vo) {
-		int count = guestbookRepository.delete(vo);
-		return count == 1;
+	public void deleteMessage(GuestbookVo vo) {
+		guestbookRepository.delete(vo);
 	}
-	
-	
 }
