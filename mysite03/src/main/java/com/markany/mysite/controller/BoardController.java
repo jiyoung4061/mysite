@@ -17,7 +17,6 @@ import com.markany.security.Auth;
 import com.markany.security.AuthUser;
 import com.markany.web.util.WebUtil;
 
-@Auth
 @Controller
 @RequestMapping("/board")
 public class BoardController {
@@ -39,14 +38,14 @@ public class BoardController {
 		return "board/view";
 	}
 	
-//	@Auth
+	@Auth
 	@RequestMapping("/delete/{no}")
 	public String delete(@AuthUser UserVo authUser, @PathVariable("no") Long boardNo, @RequestParam(value="p", required=true, defaultValue="1") Integer page, @RequestParam(value="kwd", required=true, defaultValue="") String keyword){
 		boardService.deleteContents(boardNo, authUser.getNo());
 		return "redirect:/board?p=" + page + "&kwd=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
-//	@Auth
+	@Auth
 	@RequestMapping(value="/modify/{no}")	
 	public String modify(@AuthUser UserVo authUser, @PathVariable("no") Long no, Model model){
 		BoardVo boardVo = boardService.getContents(no, authUser.getNo());
@@ -54,7 +53,7 @@ public class BoardController {
 		return "board/modify";
 	}
 
-//	@Auth
+	@Auth
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
 	public String modify(@AuthUser UserVo authUser, BoardVo boardVo, @RequestParam(value="p", required=true, defaultValue="1") Integer page, @RequestParam(value="kwd", required=true, defaultValue="") String keyword){
 		boardVo.setUserNo(authUser.getNo());
@@ -64,7 +63,7 @@ public class BoardController {
 				"&kwd=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
-//	@Auth
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)	
 	public String write(){
 		return "board/write";
