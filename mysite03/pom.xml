@@ -31,6 +31,13 @@
 			</exclusions>
 		</dependency>
 
+		<!-- Spring Aspect -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 		<!-- Spring Web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -85,7 +92,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 		<!-- Logback -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -97,7 +104,7 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
-		
+
 		<!-- servlet -->
 		<!-- jenkins에서 빌드할때 필요한 부분임! -->
 		<dependency>
