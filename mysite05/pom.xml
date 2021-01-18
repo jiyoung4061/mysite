@@ -131,7 +131,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>mysite04</finalName>
+		<finalName>mysite05</finalName>
 		<resources>
 			<resource>
 				<directory>${project.basedir}/src/main/resources</directory>
@@ -162,7 +162,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
 					<url>http://192.168.1.212:8080/manager/text</url>
-					<path>/mysite04</path>
+					<path>/mysite05</path>
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>
