@@ -1,0 +1,53 @@
+[src]
+  |---- [main]
+           |---- [java]
+           |         |---- /com
+           |		     |---- /markany
+           |			       |---- /web
+           |			       |        |---- /util
+           |			       |---- /security
+           |			       |---- /config
+           |			       |	       |---- /app
+           |			       |	       |	  |---- DBConfig.java
+           |			       |	       |	  |---- MyBatis.java
+           |			       |	       |---- /web
+           |			       |	              |---- MvcConfig
+           |			       |	              |---- SecurityConfig.java
+           |			       |	              |---- MessageConfig.java
+           |			       |	              |---- FileUploadConfig.java
+           |			       |---- /mysite
+           |			       	      |---- /controller
+           |			         	  |---- /service
+           |			         	  |---- /repository
+           |			         	  |---- /vo
+           |			         	  |---- /exception
+           |				      	  |---- /aop
+           |				          |---- /config
+           |					     			|---- AppConfig.java
+           |					     			|---- WebConfig.java
+           |           
+           |---- [resources]
+						|---- logback.xml
+						|---- /com
+								|---- /markany
+										|---- /mysite
+												|---- /app
+												|       |---- /properties
+												|       |		|---- jdbc.properties   => 코드유지보수 용이!
+												|       |---- /mybatis
+												|		|---- configuration.xml
+												|		|---- /mappers
+												|			|---- user.xml
+												|			|---- board.xml
+												|---- /web
+					        							|---- /properties
+																	|---- fileupload.properties
+																	|---- message_ko.properties
+com.markany.config.app
+com.markany.config.web
+com.markany.mysite.config
+
+com.markany.mysite.app.properties
+com.markany.mysite.app.mybatis
+com.markany.mysite.app.mybatis.mappers
+com.markany.mysite.web.properties
