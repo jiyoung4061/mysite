@@ -42,7 +42,7 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 			return false;
 		}
 		// parameter타입이 UserVo가 아닐 경우
-		if(parameter.getParameterType().equals(UserVo.class)) {
+		if(!parameter.getParameterType().equals(UserVo.class)) {
 			return false;
 		}
 		

@@ -51,23 +51,23 @@
 
 	<update id="update" parameterType="uservo">
 		<choose>
-			<when test='password !=""'>
+			<when test='password != ""'>
 				<!-- #{}이건 bind, 치환이아니기때문에 string이라고 '' 해줄필요X -->
 				<![CDATA[
-					update user 
-					set name=#{name}, 
-						password=#{password},
-						gender=#{gender}, 
-					where no=#{no}
-				]]>
+					update user
+					   set name=#{name },	   
+					       password=#{password },
+					       gender=#{gender }
+					 where no=#{no }
+				]]>					
 			</when>
 			<otherwise>
 				<![CDATA[
-					update user 
-					set name=#{name}, 
-						gender=#{gender} 
-					where no=#{no}
-				]]>
+					update user
+					   set name=#{name },
+					       gender=#{gender }
+					 where no=#{no }
+				]]>					
 			</otherwise>
 		</choose>
 	</update>

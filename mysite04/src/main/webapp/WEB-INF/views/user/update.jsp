@@ -17,41 +17,31 @@
 		<div id="content">
 			<div id="user">
 
-				<form id="join-form" name="joinForm" method="post"
-					action="${pageContext.request.contextPath}/user/update">
-					<label class="block-label" for="name">이름</label> 
+				<form id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath }/user/update">
+					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="${vo.name }">
-					<h4>이메일 : ${vo.email }</h4>
-					<label class="block-label">패스워드</label> <input name="password"
-						type="password" value="">
+
+					<h4 style="padding:10px 0">${vo.email }</h4>
+
+					<label class="block-label">패스워드</label>
+					<input name="password" type="password" value="">
+					
 					<fieldset>
 						<legend>성별</legend>
-						<c:set var="gender" value="${vo.gender }" />
 						<c:choose>
-							<c:when test="${gender eq 'female' }">
-								<label>여</label>
-								<input type="radio" name="gender" value="female"
-									checked="checked">
-								<label>남</label>
-								<input type="radio" name="gender" value="male">
+							<c:when test='${"female" == vo.gender }'>
+								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
+								<label>남</label> <input type="radio" name="gender" value="male">
 							</c:when>
 							<c:otherwise>
-								<label>여</label>
-								<input type="radio" name="gender" value="female">
-								<label>남</label>
-								<input type="radio" name="gender" value="male" checked="checked">
+								<label>여</label> <input type="radio" name="gender" value="female">
+								<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
 							</c:otherwise>
 						</c:choose>
 					</fieldset>
-
-					<fieldset>
-						<legend>약관동의</legend>
-						<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
-						<label>서비스 약관에 동의합니다.</label>
-					</fieldset>
-
-					<input type="submit" value="회원정보수정하기">
-
+					
+					<input type="submit" value="수정하기">
+					
 				</form>
 			</div>
 		</div>
