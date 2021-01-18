@@ -1,8 +1,12 @@
 package com.markany.mysite.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,13 +22,22 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo userVo) { // join.jsp를 같이 사용하니까 uservo가 없으면 오류남!
 		return "user/join";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(UserVo vo) {
-		userService.join(vo);
+	public String join(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) { // valid한 결과를 result에 
+					// @ModelAttribute 어노테이션 : 넘겨주지않아도 UserVo-class이름의 첫글자만 소문자로 바뀌어서 modelattribute에 들어감
+		if(result.hasErrors()) {
+//			List<ObjectError> list = result.getAllErrors();
+//			for(ObjectError error : list ) {
+//				System.out.println(error);
+//			}
+			model.addAllAttributes(result.getModel());
+			return "user/join"; // error발생시 다시 join으로
+		}
+		userService.join(userVo);
 		return "redirect:/user/joinsuccess";
 	}
 
@@ -38,11 +51,9 @@ public class UserController {
 		return "user/joinsuccess";
 	}
 	
-	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(@AuthUser UserVo authUser, Model model) {
-		System.out.println(authUser);
-		
+
 		Long no = authUser.getNo();
 		UserVo userVo = userService.getUser(no);
 		
@@ -50,7 +61,8 @@ public class UserController {
 		return "user/update";
 	}
 
-	@Auth
+//	@Auth(value="USER", role=Role.USER)
+	@Auth // @Auth("USER") user일때 접근가능한 부분
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo userVo) {
 		Long no = authUser.getNo();

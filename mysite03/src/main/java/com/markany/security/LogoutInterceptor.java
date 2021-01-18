@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class LogoutInterceptor extends HandlerInterceptorAdapter {
-
-
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -22,5 +20,4 @@ public class LogoutInterceptor extends HandlerInterceptorAdapter {
 		
 		return false;
 	}
-
 }

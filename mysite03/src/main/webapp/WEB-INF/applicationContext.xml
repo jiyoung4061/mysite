@@ -45,6 +45,7 @@
 
 	<context:component-scan
 		base-package="com.markany.mysite.service, com.markany.mysite.repository, com.markany.mysite.aspect">
+		<!-- base-package아래 패키지들에서 @Repository, @Service, @Component annotation을 scan해라! -->
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation"

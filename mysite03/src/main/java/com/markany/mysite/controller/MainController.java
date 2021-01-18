@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 	
-	@RequestMapping("")
+	@RequestMapping({"","/main"}) // url 여러개 설정O
 	public String index() {
 		return "main/index";
 	}

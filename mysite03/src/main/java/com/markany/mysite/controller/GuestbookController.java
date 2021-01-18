@@ -43,5 +43,4 @@ public class GuestbookController {
 		guestbookService.deleteMessage(vo);
 		return "redirect:/guestbook";
 	}
-	
 }

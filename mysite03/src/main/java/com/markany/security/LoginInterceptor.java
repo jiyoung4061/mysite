@@ -24,6 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		vo.setEmail(email);
 		vo.setPassword(password);
 		
+		// userService 주입하기!!
 		UserVo authUser = userService.getUser(vo);
 		if(authUser == null) {
 			request.setAttribute("userVo", vo);
@@ -36,6 +37,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		session.setAttribute("authUser", authUser);
 		response.sendRedirect(request.getContextPath());
 		
+		// 다시 되돌아갈거니까
 		return false;
 	}
 }

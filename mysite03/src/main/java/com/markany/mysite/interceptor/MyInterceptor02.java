@@ -13,5 +13,4 @@ public class MyInterceptor02 extends HandlerInterceptorAdapter {
 		System.out.println("Myinterceptor02:preHandler(...) called");
 		return false;
 	}
-
 }

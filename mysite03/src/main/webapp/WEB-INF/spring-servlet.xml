@@ -11,9 +11,10 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
-	<mvc:annotation-driven >
+	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
-			<bean class="com.markany.security.AuthUserHandlerMethodArgumentResolver"/>
+			<bean
+				class="com.markany.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
@@ -22,28 +23,25 @@
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
-	<!-- 		
+		<!-- <mvc:interceptor> <mvc:mapping path="/board/**" /> <bean class="com.markany.mysite.interceptor.MyInterceptor02"/> 
+			</mvc:interceptor> -->
 		<mvc:interceptor>
-			<mvc:mapping path="/board/**" />
-			<bean class="com.markany.mysite.interceptor.MyInterceptor02"/>
-		</mvc:interceptor>
-	-->
-		<mvc:interceptor>
+			<!-- 여기는 get/post방식을 모르니까 그냥 path url이름을 바꿔서 구분해준다! -->
 			<mvc:mapping path="/user/auth" />
-			<bean class="com.markany.security.LoginInterceptor"/>
+			<bean class="com.markany.security.LoginInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/logout" />
-			<bean class="com.markany.security.LogoutInterceptor"/>
+			<bean class="com.markany.security.LogoutInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/user/auth"/>
-			<mvc:exclude-mapping path="/assets/**"/>
-			<bean class="com.markany.security.AuthInterceptor"/>
+			<mvc:mapping path="/**" /> <!-- 어느경로든 auth를 확인해야하니까! -->
+			<mvc:exclude-mapping path="/user/auth" />
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="com.markany.security.AuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
 
 	<!-- ViewResolver 설정 -->
 	<bean id="viewResolver"
@@ -54,6 +52,19 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1" />
 	</bean>
+
+	<!-- MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- Controller scan -->
 	<context:annotation-config />
 	<context:component-scan
 		base-package="com.markany.mysite.controller, com.markany.mysite.exception" />
