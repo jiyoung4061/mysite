@@ -7,14 +7,14 @@
            |			       |        |---- /util
            |			       |---- /security
            |			       |---- /config
-           |			       |	       |---- /app
-           |			       |	       |	  |---- DBConfig.java
-           |			       |	       |	  |---- MyBatis.java
-           |			       |	       |---- /web
-           |			       |	              |---- MvcConfig
-           |			       |	              |---- SecurityConfig.java
-           |			       |	              |---- MessageConfig.java
-           |			       |	              |---- FileUploadConfig.java
+           |			       |	    |---- /app
+           |			       |	    |	   |---- DBConfig.java
+           |			       |	    |  	   |---- MyBatis.java
+           |			       |	    |---- /web
+           |			       |	           |---- MvcConfig
+           |			       |	           |---- SecurityConfig.java
+           |			       |	           |---- MessageSourceConfig.java
+           |			       |	           |---- FileUploadConfig.java
            |			       |---- /mysite
            |			       	      |---- /controller
            |			         	  |---- /service
@@ -31,23 +31,24 @@
 						|---- /com
 								|---- /markany
 										|---- /mysite
-												|---- /app
-												|       |---- /properties
-												|       |		|---- jdbc.properties   => 코드유지보수 용이!
-												|       |---- /mybatis
-												|		|---- configuration.xml
-												|		|---- /mappers
-												|			|---- user.xml
-												|			|---- board.xml
-												|---- /web
-					        							|---- /properties
-																	|---- fileupload.properties
-																	|---- message_ko.properties
+												|---- /config
+															|---- /app
+															|       |---- /properties
+															|       |			|---- jdbc.properties   => 코드유지보수 용이!
+															|       |---- /mybatis
+															|		|---- configuration.xml
+															|		|---- /mappers
+															|					|---- user.xml
+															|					|---- board.xml
+															|---- /web
+					        										|---- /properties
+																				|---- fileupload.properties
+																				|---- message_ko.properties
 com.markany.config.app
 com.markany.config.web
 com.markany.mysite.config
 
-com.markany.mysite.app.properties
-com.markany.mysite.app.mybatis
-com.markany.mysite.app.mybatis.mappers
-com.markany.mysite.web.properties
+com.markany.mysite.config.app.properties
+com.markany.mysite.config.app.mybatis
+com.markany.mysite.config.app.mybatis.mappers
+com.markany.mysite.config.web.properties
