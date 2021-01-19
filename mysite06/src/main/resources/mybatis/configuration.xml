@@ -7,8 +7,8 @@
 		<typeAlias alias="boardvo" type="com.markany.mysite.vo.BoardVo"/>
 	</typeAliases>	
 	<mappers>
-		<mapper resource="com/markany/mysite/config/app/mybatis/mappers/user.xml" />
-		<mapper resource="com/markany/mysite/config/app/mybatis/mappers/guestbook.xml" />
-		<mapper resource="com/markany/mysite/config/app/mybatis/mappers/board.xml" />
+		<mapper resource="mybatis/mappers/user.xml" />
+		<mapper resource="mybatis/mappers/guestbook.xml" />
+		<mapper resource="mybatis/mappers/board.xml" />
 	</mappers>
 </configuration>
