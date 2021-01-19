@@ -1,0 +1,83 @@
+# tab사용 불가능하고 띄어쓰기 필수!(특히 :뒤에 한칸 띄워야함)
+# yml 사용이유 : 계층형으로 알아보기 쉽다!
+
+# active spring profile
+spring:
+   profiles:
+      active: dev
+
+---
+# common spring configuration
+
+spring:
+   # mvc
+   mvc:
+      view:
+         prefix: /WEB-INF/views/
+         suffix: .jsp
+   # http
+   http:
+      encoding:
+         charset: utf-8
+         enabled: true
+         forced: true
+         forced-request: true
+         forced-response: true
+
+   # multipart
+   servlet:
+      multipart:
+         enabled: true
+         max-file-size: 50MB
+         max-request-size: 50MB
+
+   # Internationalization(Message Source)
+   messages:
+      always-use-message-format: true
+      basename: messages/message_ko
+      encoding: utf-8
+
+   # AOP(@EnableAspectJAutoProxy)
+   aop:
+      auto: true
+      proxy-target-class: true
+
+---
+# spring dev profile configuration
+spring:
+   profiles: dev
+   # datasource
+   datasource:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mysql://192.168.90.219:3307/webdb?characterEncoding=utf8
+      username: webdb
+      password: apfhd123
+      initialSize: 10
+      maxActive: 100
+
+   # devtools
+   devtools:
+      livereload:
+         enabled: true
+---
+# spring production profile configuration
+spring:
+   profiles: production
+
+
+
+
+---
+# server
+server:
+   port: 8088
+   servlet:
+      context-path: /mysite06
+
+# mybatis
+mybatis:
+   config-location: classpath:mybatis/configuration.xml
+
+# logging
+logging:
+   config: classpath:logback.xml
