@@ -24,16 +24,16 @@
 					<label class="block-label" for="name">이름</label>
 					<form:input path="name" />
 					<p style="text-align: left; padding: 5px 0 0 0; color: #f00">
-						<form:errors path="name"/>
+						<form:errors path="name" />
 					</p>
 					<label class="block-label" for="email">이메일</label>
 					<form:input path="email" />
 					<p style="text-align: left; padding: 5px 0 0 0; color: #f00">
-						<form:errors path="email"/>
+						<form:errors path="email" />
 					</p>
-					
+
 					<label class="block-label">패스워드</label>
-					<form:password path="password"/>
+					<form:password path="password" />
 
 					<fieldset>
 						<legend>성별</legend>
