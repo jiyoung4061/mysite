@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.markany.mysite.dto.JsonResult;
 import com.markany.mysite.service.UserService;
 
-@Controller("UserApiController")
+@Controller("userApiController")
 @RequestMapping("/api/user")		
 public class UserController {
 	

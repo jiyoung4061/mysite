@@ -12,7 +12,7 @@
 	<![CDATA[
 		select no, name, password, message, date_format(reg_date, "%Y/%m/%d") as regDate
 		from guestbook 
-		order by no desc
+		order by reg_date desc
 	]]>
 	</select>
 	
@@ -21,13 +21,16 @@
 		select no, name, password, message, date_format(reg_date, "%Y/%m/%d") as regDate
 		from guestbook 
 	]]>
+	
 	<if test='_parameter > 0'>
-		where no > #{_parameter}
-	</if>
+			<![CDATA[
+				 where no < #{_parameter } 
+			]]>	
+		</if>	  
 	<![CDATA[
-		order by no desc
-		limit 0,3
-	]]>
+		  order by no desc
+		     limit 0, 3
+		]]>	
 	</select>
 
 	<insert id='insert' parameterType="guestbookvo">

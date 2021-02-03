@@ -43,4 +43,10 @@ public class GuestbookController {
 		guestbookService.deleteMessage(vo);
 		return "redirect:/guestbook";
 	}
+	
+	@RequestMapping(value="/spa", method=RequestMethod.GET)
+	public String indexSpa() {
+		return "guestbook/index-spa";
+	}
+
 }
