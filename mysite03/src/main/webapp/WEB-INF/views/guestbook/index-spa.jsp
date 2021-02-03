@@ -9,27 +9,130 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/guestbook-spa.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.5.1.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath }/assets/js/ejs/ejs.js"></script>
 <script>
 /* guestbook spa application */
 let startNo = 0;
+let isEnd = false;
+
+const listTemplate = new EJS({
+	url:'${pageContext.request.contextPath }/assets/js/ejs/list-template.ejs'
+});
+
+const listItemTemplate = new EJS({
+	url:'${pageContext.request.contextPath }/assets/js/ejs/list-item-template.ejs'
+});
+
+const render = function(vo){
+	console.log(vo);
+	let html = 
+		"<li data-no='"+ vo.no +"'>" +
+		"<strong>" + vo.name + "</strong>" +
+		"<p>" + vo.message.replace(/\n/gi, "<br>") + "</p>" + // g : 전부다, i: 대소문자 구분X
+		"<strong></strong>" +
+		"<a href='' data-no='" + vo.no + "'>삭제</a>" + 
+		"</li>";
+	
+	$('#list-guestbook').append(html);
+}
+
+const fetchList = function() {
+	if(isEnd){
+		return;
+	}
+	$.ajax({
+		url: '${pageContext.request.contextPath }/api/guestbook/list/' + startNo,
+		async: true,
+		type: 'get',
+		dataType: 'json',
+		data: '',
+		success: function(response){
+			if(response.result!= 'success'){
+				console.error(response.message);
+				return;
+			}
+			
+			if(response.data.length < 3){
+				isEnd = true;
+				$('#btn-fetch').prop('disabled', true);
+				return;
+			}
+			
+			// rendreing
+			// response.data.forEach(render);
+			const html = listTemplate.render(response);
+			$("#list-guestbook").append(html);
+			
+			// startNo = response.data[response.data.length-1]["no"];
+			startNo = $('#list-guestbook li').last().data('no') || 0;
+		},
+		error: function(xhr, status, e){
+			console.log(status + " : " + e);
+		}
+	});
+}
 $(function(){
-	$('#btn-fetch').click(function(){
+	// 버튼 이벤트
+	// $('#btn-fetch').click(fetchList);
+	
+	// 입력폼 submit 이벤트
+	$('#add-form').submit(function(event){
+		event.preventDefault();
+		
+		vo = {};
+		// validation
+		vo.name = $('#input-name').val();
+		vo.password = $('#input-password').val();
+		vo.message = $('#tx-message').val();
+	
+		console.log(vo);
+		
+		// posting
 		$.ajax({
-			url: '${pageContext.request.contextPath }/api/guestbook/list/' + startNo,
+			url: '${pageContext.request.contextPath }/api/guestbook/add',
 			async: true,
-			type: 'get',
+			type: 'post',
 			dataType: 'json',
-			data: '',
+			data: JSON.stringify(vo),
+			contentType: 'application/json',
 			success: function(response){
 				console.log(response);
+				
+				if(response.result!= 'success'){
+					console.error(response.message);
+					return;
+				}
+				
+				const html = listItemTemplate.render(response.data);
+				$('#list-guestbook').prepend(html);
+				
+				// form reset
+				$('#add-form')[0].reset();
 			},
 			error: function(xhr, status, e){
 				console.log(status + " : " + e);
 			}
-		})
+		});
 	});
+	
+	// 창 스크롤 이벤트
+	$(window).scroll(function(){
+		const $window = $(this);
+		const $document = $(document);
+		
+		const scrollTop = $window.scrollTop(); 
+		const windowHeight = $window.height();
+		const documentHeight = $document.height();
+		
+		if(windowHeight + scrollTop + 10 > documentHeight){
+			fetchList();
+		}
+	});
+	
+	// 첫번째 리스트 가져오기
+	fetchList();
 });
 </script>
 </head>
@@ -42,41 +145,10 @@ $(function(){
 				<form id="add-form" action="" method="post">
 					<input type="text" id="input-name" placeholder="이름">
 					<input type="password" id="input-password" placeholder="비밀번호">
-					<textarea id="tx-content" placeholder="내용을 입력해 주세요."></textarea>
+					<textarea id="tx-message" placeholder="내용을 입력해 주세요."></textarea>
 					<input type="submit" value="보내기" />
 				</form>
-				<ul id="list-guestbook">
-
-					<li data-no=''>
-						<strong>지나가다가</strong>
-						<p>
-							별루입니다.<br>
-							비번:1234 -,.-
-						</p>
-						<strong></strong>
-						<a href='' data-no=''>삭제</a> 
-					</li>
-					
-					<li data-no=''>
-						<strong>둘리</strong>
-						<p>
-							안녕하세요<br>
-							홈페이지가 개 굿 입니다.
-						</p>
-						<strong></strong>
-						<a href='' data-no=''>삭제</a> 
-					</li>
-
-					<li data-no=''>
-						<strong>주인</strong>
-						<p>
-							아작스 방명록 입니다.<br>
-							테스트~
-						</p>
-						<strong></strong>
-						<a href='' data-no=''>삭제</a> 
-					</li>				
-				</ul>
+				<ul id="list-guestbook"></ul>
 				
 				<div style='margin: 20px 0 0 0'>
 					<button id='btn-fetch'>다음가져오기</button>
