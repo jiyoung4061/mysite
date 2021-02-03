@@ -1,0 +1,6 @@
+01 : JSP로만 작성된 버전(Model1)
+02 : Servlet+ JSP로 작성된 버전(Model2)
+03 : Spring MVC (XML Configuration)
+04 : Spring MVC (Java Configuration01)
+05 : Sptring MVC (Java Configuration02***)
+06 : Spring Boot

@@ -1,0 +1,55 @@
+<--------평가기준------->
+<기본-필수 없으면 X>
+- MVC적용(20점)
+V 게시물 입력(10점) ★
+V 게시물 리스트(10점) ★   ===> 빈칸 입력시
+V 게시물 삭제(10점) ★  
+V 게시물 보기(5점) 
+V 게시물 수정(5점)
+- 상태에 따른 UI변화(10점)
+	|--- 각 뷰별 세션에 따른 버튼 배치
+	|--- 적절한 Include
+	|--- 인증 유무에 따른 네비게이션 및 탑 상태의 변화
+<추가>
+V 조회수(10점)
+V 페이징 처리(10점) ===> 페이지 목록 일관되도록 처리해야함
+V 댓글 처리
+- 예외 발생시 건당 -5점
+
+<부가-안해도됨>
+- 답글(10점)	[답글:comments / 댓글:reply]
+- 리스트에서 게시물 검색 기능(10점)
+ ___________________________________
+|no | title | g_no | o_no | depth|
+|-----------------------------------|
+|___________________________________|
+
+<<계층형 게시판>>
+no	: 글번호(PK)
+title	: 타이틀
+group_no	: 그룹번호
+order_no	: 그룹내 순서
+depth	: 글의 깊이
+
+select * from board order by g_no desc, o_no asc
+
+* 새로운 글이 하나 추가되면
+g_no = max(g_no) +1
+o_no = 1
+depth =1 
+
+* 이미 써있는 글에 댓글 남기기 => 댓글에 본글에 대한 groupNo가 있음!
+orderNo = orderNo+ 1
+depth = depth +1
+	
+update board
+set o_no = o_no+1
+where g_no = 1 and o_no >= 마지막orderNo // 최근 댓글이 위로 오도록!
+
+<li><a href="">◀</a></li>
+						<li class="selected">1</li>
+						<li><a href="${pageContext.request.contextPath }/board?a=list&p=2">2</a></li>
+						<li><a href="">3</a></li>
+						<li>4</li>
+						<li>5</li>
+						<li><a href="">▶</a></li>
