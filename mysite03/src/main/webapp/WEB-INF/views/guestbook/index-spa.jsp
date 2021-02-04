@@ -75,7 +75,7 @@ const fetchList = function() {
 }
 $(function(){
 	// 버튼 이벤트
-	// $('#btn-fetch').click(fetchList);
+	$('#btn-fetch').click(fetchList);
 	
 	// 입력폼 submit 이벤트
 	$('#add-form').submit(function(event){
@@ -131,9 +131,41 @@ $(function(){
 		}
 	});
 	
+	// 삭제버튼 click event
+	// Live event : 존재하지 않는 element 이벤트 핸들러를 미리 세팅하는 것
+	// delegation (위임, document)
+	$(document).on('click', '#list-guestbook li a', function(event){
+		event.preventDefault();
+		console.log('click');
+	});
+	
 	// 첫번째 리스트 가져오기
 	fetchList();
+	
+	// jQuery Plugin Test
+	$("#btn-fetch").hello();
+	$("#btn-fetch").flash();
 });
+</script>
+
+<script>
+(function($){
+	$.fn.hello = function() {
+		console.log(this);
+		console.log("hello #" + this.attr('title'));
+	}
+})(jQuery);
+
+(function($){
+	$.fn.flash = function() {
+		const $this = this;
+		let isBlink = false;
+		setInterval(function(){
+			$this.css('backgroundColor', (isBlink ? '#f00' : '#aaa'));
+			isBlink = !isBlink;
+		}, 1000);
+	}
+})(jQuery);
 </script>
 </head>
 <body>
@@ -152,6 +184,7 @@ $(function(){
 				
 				<div style='margin: 20px 0 0 0'>
 					<button id='btn-fetch'>다음가져오기</button>
+					<button id='btn-fetch' title='jQuery plugin'>다음가져오기</button>
 				</div>
 				
 			</div>
