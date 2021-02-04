@@ -58,9 +58,9 @@
 			<version>1.1.0.Final</version>
 		</dependency>
 		<dependency>
-			   <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator</artifactId>
-		    <version>6.1.0.Final</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.1.0.Final</version>
 		</dependency>
 
 		<!-- Spring JDBC -->
@@ -104,12 +104,12 @@
 		</dependency>
 
 		<!-- jackson -->
-	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.9.9</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.9</version>
+		</dependency>
 
 
 		<!-- Logback -->
@@ -170,7 +170,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
-					<url>http://192.168.90.219:8080/manager/text</url>
+					<url>http://192.168.61.219:8080/manager/text</url>
 					<path>/mysite03</path>
 					<username>admin</username>
 					<password>manager</password>
