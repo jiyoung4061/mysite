@@ -93,6 +93,53 @@ const fetchList = function() {
 	});
 }
 $(function(){
+	const dialogDelete = $("#dialog-delete-form").dialog({
+		width : 300,
+		height: 200,
+		autoOpen: false,
+		modal: true,
+		buttons : {
+			"삭제": function(){
+				const password = $("#password-delete").val();
+				const no = $("#hidden-no").val();
+				$.ajax({
+					url: '${pageContext.request.contextPath}/api/guestbook/delete/' + no,
+					async: true,
+					type: 'delete',
+					dataType: 'json',
+					data : 'password=' + password,
+					success: fucntion(response){
+						console.log(response);
+						if(response.result != 'success'){
+							console.error(response.message);
+							return;
+						}
+						
+						if(response.data != -1) {
+							$("#list-guestbook li[data-no=]"+response.data+"]").remove();
+							dialogDelete.dialog('close');
+							return;
+						}
+						
+						// 비밀번호가 틀린경우
+						$("#dialog-delete-form p.validationTips.error").show();
+					},
+					error: function(xhr, status, e){
+						console.log(status + ":" + e);
+					}
+				});
+			},
+			"취소": function(){
+				$(this).dialog('close');
+			}
+		},
+		close: function(){
+			$("#password-delete").val("");
+			$("#hidden-no").val("");
+			$("#dialog-delete-form p.validationTips.error").hide();
+		}
+	});
+	
 	// 버튼 이벤트
 	$('#btn-fetch').click(fetchList);
 	
@@ -157,6 +204,10 @@ $(function(){
 		event.preventDefault();
 		console.log('click');
 		messageBox('test~', 'click!!!');
+		
+		const no=$(this).data('no');
+		$('hidden-no').val(no);
+		dialogDelete.dialog('open');
 	});
 	
 	// 첫번째 리스트 가져오기
@@ -209,7 +260,15 @@ $(function(){
 				</div>
 				
 			</div>
-			
+			<div id="dialog-delete-form" title="메세지 삭제" style="display:none">
+  				<p class="validateTips normal">작성시 입력했던 비밀번호를 입력하세요.</p>
+  				<p class="validateTips error" style="display:none">비밀번호가 틀립니다.</p>
+  				<form>
+ 					<input type="password" id="password-delete" value="" class="text ui-widget-content ui-corner-all">
+					<input type="hidden" id="hidden-no" value="">
+					<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+  				</form>
+			</div>
 			<div id="dialog-message" title="" style="display:none">
   				<p></p>
 			</div>						

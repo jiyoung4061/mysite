@@ -34,8 +34,17 @@ public class GuestbookService {
 //		songRepository.insert(songVo);
 	}
 
-	public void deleteMessage(GuestbookVo vo) {
-		guestbookRepository.delete(vo);
+	public boolean deleteMessage(GuestbookVo vo) {
+		int count = guestbookRepository.delete(vo);
+		return count == 1;
+	}
+
+	public boolean deleteMessage(Long no, String password) {
+		GuestbookVo vo = new GuestbookVo();
+		vo.setNo(no);
+		vo.setPassword(password);
+		
+		return deleteMessage(vo);
 	}
 
 }
