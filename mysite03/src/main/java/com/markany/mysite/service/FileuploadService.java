@@ -9,22 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class FileUploadService {
-	private static final String SAVE_PATH="/mysite-uploads";
-	private static final String URL_BASE="/images";
-
+public class FileuploadService {
+	
+	private static final String SAVE_PATH="/Users/Jiyoung/java-fullstack/eclipse-workspace/mysite/mysite03/src/main/webapp/assets/gallery-examples";
+	private static final String URL_BASE="/assets/gallery-examples";
+	
 	public String restore(MultipartFile multipartFile) {
 		String url = "";
 
 		try {
 			String originFilename = multipartFile.getOriginalFilename();
-			String extName = originFilename.substring(originFilename.lastIndexOf('.')+1); // ex. profile.20210107.jpg이면 마지막 .을 찾는다!
+			String extName = originFilename.substring(originFilename.lastIndexOf('.')+1); 
 			String saveFilename = genSaveFilename(extName);
-			Long fileSize = multipartFile.getSize();
-
-			System.out.println("--->" + originFilename);
-			System.out.println("--->" + saveFilename);
-			System.out.println("--->" + fileSize);
 
 			byte[] fileData = multipartFile.getBytes();
 			OutputStream os = new FileOutputStream(SAVE_PATH + "/" +saveFilename);
@@ -32,7 +28,6 @@ public class FileUploadService {
 			os.close();
 			
 			url=URL_BASE + "/" + saveFilename;
-			
 		} catch (IOException e) {
 			throw new RuntimeException("file upload error:"+ e);
 		}
@@ -42,14 +37,9 @@ public class FileUploadService {
 
 	private String genSaveFilename(String extName) {
 		String filename = "";
-		/*
-		 * date Class는 없어질 경우가 많음 => Calendar Class사용하기!
-		 * new Date
-		 * Calender는 new X
-		 */
 		
 		Calendar calendar = Calendar.getInstance();
-		filename += calendar.get(Calendar.YEAR); // year가 나옴
+		filename += calendar.get(Calendar.YEAR);
 		filename += calendar.get(Calendar.MONTH);
 		filename += calendar.get(Calendar.DATE);
 		filename += calendar.get(Calendar.HOUR);
@@ -60,4 +50,5 @@ public class FileUploadService {
 		return filename;
 	}
 
+	
 }

@@ -5,10 +5,12 @@
 		<typeAlias alias="uservo" type="com.markany.mysite.vo.UserVo"/>
 		<typeAlias alias="guestbookvo" type="com.markany.mysite.vo.GuestbookVo"/>
 		<typeAlias alias="boardvo" type="com.markany.mysite.vo.BoardVo"/>
+		<typeAlias alias="galleryvo" type="com.markany.mysite.vo.GalleryVo"/>
 	</typeAliases>	
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
+		<mapper resource="mybatis/mappers/gallery.xml" />
 	</mappers>
 </configuration>
