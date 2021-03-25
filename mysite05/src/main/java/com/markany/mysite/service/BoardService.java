@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.markany.mysite.repository.BoardRepository;
+//import com.markany.mysite.repository.BoardRepository;
 import com.markany.mysite.vo.BoardVo;
 
 @Service
@@ -16,43 +16,48 @@ public class BoardService {
 	private static final int PAGE_SIZE = 5; //페이지 리스트의 페이지 수
 	
 	@Autowired
-	private BoardRepository boardRepository;
+//	private BoardRepository boardRepository;
 	
 	public boolean addContents(BoardVo boardVo){
 		if(boardVo.getGroupNo() != null){
 			increaseGroupOrderNo(boardVo);
 		}
-		return boardRepository.insert(boardVo) == 1;
+//		return boardRepository.insert(boardVo) == 1;
+		return true;
 	}
 	
 	public BoardVo getContents(Long no){
-		BoardVo boardVo = boardRepository.findByNo(no);
+//		BoardVo boardVo = boardRepository.findByNo(no);
 		
-		if(boardVo != null){
-			boardRepository.updateHit(no);
-		}
-		
+//		if(boardVo != null){
+//			boardRepository.updateHit(no);
+//		}
+		BoardVo boardVo = null;
 		return boardVo;
 	}
 
 	public BoardVo getContents(Long no, Long userNo){
-		BoardVo boardVo = boardRepository.findByNoAndUserNo(no, userNo);
+//		BoardVo boardVo = boardRepository.findByNoAndUserNo(no, userNo);
+		BoardVo boardVo = null;
 		return boardVo;
 	}
 	
 	public boolean modifyContents(BoardVo boardVo){
-		int count = boardRepository.update(boardVo);
+//		int count = boardRepository.update(boardVo);
+		int count = 1;
 		return count == 1;
 	}
 	
 	public boolean deleteContents(Long boardNo, Long userNo){
-		int count = boardRepository.delete(boardNo, userNo);
+//		int count = boardRepository.delete(boardNo, userNo);
+		int count = 1;
 		return count == 1;
 	}
 	
 	public Map<String, Object> getContentsList(int currentPage, String keyword){		
 		//1. 페이징을 위한 기본 데이터 계산
-		int totalCount = boardRepository.getTotalCount(keyword); 
+		int totalCount = 1;
+//		int totalCount = boardRepository.getTotalCount(keyword); 
 		int pageCount = (int)Math.ceil((double)totalCount / LIST_SIZE);
 		int blockCount = (int)Math.ceil((double)pageCount / PAGE_SIZE);
 		int currentBlock = (int)Math.ceil((double)currentPage / PAGE_SIZE);
@@ -75,12 +80,12 @@ public class BoardService {
 		int endPage = (nextPage > 0) ? (beginPage - 1) + LIST_SIZE : pageCount;
 		
 		//4. 리스트 가져오기
-		List<BoardVo> list = boardRepository.findAllByPageAndKeword(keyword, currentPage, LIST_SIZE);
+//		List<BoardVo> list = boardRepository.findAllByPageAndKeword(keyword, currentPage, LIST_SIZE);
 		
 		//5. 리스트 정보를 맵에 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("list", list);
+//		map.put("list", list);
 		map.put("totalCount", totalCount);
 		map.put("listSize", LIST_SIZE);
 		map.put("currentPage", currentPage);
@@ -94,6 +99,7 @@ public class BoardService {
 	}
 	
 	public boolean increaseGroupOrderNo(BoardVo boardVo){
-		return boardRepository.updateOrderNo(boardVo.getGroupNo(), boardVo.getOrderNo()) > 0;
+//		return boardRepository.updateOrderNo(boardVo.getGroupNo(), boardVo.getOrderNo()) > 0;
+		return true;
 	}
 }

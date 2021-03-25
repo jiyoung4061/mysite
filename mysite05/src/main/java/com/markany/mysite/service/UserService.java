@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.markany.mysite.repository.UserRepository;
+//import com.markany.mysite.repository.UserRepository;
 import com.markany.mysite.vo.UserVo;
 
 @Service
@@ -13,28 +13,33 @@ public class UserService {
 	private static final Log LOGGER = LogFactory.getLog(UserService.class);
 
 	@Autowired
-	private UserRepository userRepository;
+//	private UserRepository userRepository;
 
 	public boolean join(UserVo vo) {
 		LOGGER.info("before--->" + vo);
-		int count = userRepository.insert(vo);
+//		int count = userRepository.insert(vo);
 		LOGGER.info("after--->" + vo);
-
+		int count = 1;
 		return count == 1;
 	}
 
 	public UserVo getUser(UserVo vo) {
 		// System.out.println("findbyEmail-->" + userRepository.findByEmail(vo.getEmail()));
 		// return userRepository.findByEmailAndPassword2(vo);
-		return userRepository.findByEmailAndPassword(vo);
+//		return userRepository.findByEmailAndPassword(vo);
+		UserVo uservo = null;
+		return uservo;
 	}
 
 	public UserVo getUser(Long no) {
-		return userRepository.findByNo(no);
+//		return userRepository.findByNo(no);
+		UserVo uservo = null;
+		return uservo;
 	}
 
 	public boolean updateUser(UserVo vo) {
-		int count = userRepository.update(vo);
+//		int count = userRepository.update(vo);
+		int count = 1;
 		return count == 1;
 	}
 	

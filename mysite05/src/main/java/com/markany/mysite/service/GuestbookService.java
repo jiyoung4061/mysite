@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.influxdb.InfluxDBTemplate;
 import org.springframework.stereotype.Service;
 
-import com.markany.mysite.repository.GuestbookRepository;
+//import com.markany.mysite.repository.GuestbookRepository;
 import com.markany.mysite.vo.GuestbookVo;
 
 @Service
