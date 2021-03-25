@@ -6,12 +6,11 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
 import com.markany.config.app.InfluxDBConfiguration;
-import com.markany.config.app.MyBatisConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan({"com.markany.mysite.service","com.markany.mysite.repository","com.markany.mysite.aspect"})
-@Import({InfluxDBConfiguration.class, MyBatisConfig.class})
+@Import({InfluxDBConfiguration.class})
 public class AppConfig {
 	
 }
