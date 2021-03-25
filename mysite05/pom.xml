@@ -17,6 +17,21 @@
 	</properties>
 	
 	<dependencies>
+
+        <dependency>
+            <groupId>org.influxdb</groupId>
+            <artifactId>influxdb-java</artifactId>
+            <version>2.14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.miwurster</groupId>
+            <artifactId>spring-data-influxdb</artifactId>
+            <version>1.8</version>
+        </dependency>
+        
+	<!-- =============================================================================== -->
+	
 		<!-- Spring Core, Context, AOP -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -75,13 +90,6 @@
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
-		</dependency>
-
-		<!-- MariaDB JDBC Driver -->
-		<dependency>
-		    <groupId>org.mariadb.jdbc</groupId>
-		    <artifactId>mariadb-java-client</artifactId>
-		    <version>2.4.4</version>
 		</dependency>
 			
 		<!-- MyBatis -->

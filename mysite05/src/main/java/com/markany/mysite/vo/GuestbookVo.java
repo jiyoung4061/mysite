@@ -1,10 +1,24 @@
 package com.markany.mysite.vo;
 
+import org.influxdb.annotation.Column;
+import org.influxdb.annotation.Measurement;
+
+@Measurement(name="mysite_guestbook")
 public class GuestbookVo {
+	
+	@Column(name="no")
 	private long no;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="password")
 	private String password;
+	
+	@Column(name="message")
 	private String message;
+	
+	@Column(name="time")
 	private String regDate;
 	
 	public long getNo() {

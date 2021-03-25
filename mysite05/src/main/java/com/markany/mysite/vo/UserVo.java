@@ -3,20 +3,34 @@ package com.markany.mysite.vo;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.influxdb.annotation.Column;
+import org.influxdb.annotation.Measurement;
 
+@Measurement(name = "mysite_user")
 public class UserVo {
+	@Column(name="no")
 	private Long no;
 	
 	@NotEmpty
 	@Length(min=2, max=8)
+	@Column(name="name")
 	private String name;
 	
 	@NotEmpty
 	@Email
+	@Column(name="email")
 	private String email;
+	
+	@Column(name="password")
 	private String password;
+	
+	@Column(name="gender")
 	private String gender;
+	
+	@Column(name="role")
 	private String role;
+	
+	@Column(name="time")
 	private String joinDate;
 	
 	public Long getNo() {
