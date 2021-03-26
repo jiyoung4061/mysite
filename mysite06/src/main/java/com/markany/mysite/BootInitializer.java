@@ -9,6 +9,7 @@ public class BootInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		System.out.println("BootInit");
 		return builder.sources(BootApp.class);
 	}
 	

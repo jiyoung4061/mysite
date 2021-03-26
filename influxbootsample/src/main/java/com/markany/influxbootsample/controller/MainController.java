@@ -18,7 +18,6 @@ public class MainController {
 	@Autowired
 	private MainService mainService;
 
-
 	@GetMapping(path="/h2os")
 	public @ResponseBody List<H2oFeet> h2o_list() {
 

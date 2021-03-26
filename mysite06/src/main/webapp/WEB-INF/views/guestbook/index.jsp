@@ -37,10 +37,9 @@
 						<c:set var="count" value="${fn:length(list) }"/>
 						<c:forEach items='${list}' var='vo' varStatus='status'>							
 							<tr>
-								<td>[${count-status.index}]</td>
 								<td>${vo.getName()}</td>
-								<td>${vo.getReg_date()}</td>
-								<td><a href="${pageContext.request.contextPath}/guestbook/delete/${vo.no}">삭제</a></td>
+								<td>${ }</td>
+								<td><a href="${pageContext.request.contextPath}/guestbook">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4>${fn:replace(vo.message, newLine, "<br/>") }

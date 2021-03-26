@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.markany.security.AuthInterceptor;
 import com.markany.security.AuthUserHandlerMethodArgumentResolver;
-import com.markany.security.LoginInterceptor;
+//import com.markany.security.LoginInterceptor;
 import com.markany.security.LogoutInterceptor;
 
 @Configuration
@@ -37,10 +37,10 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	// Interceptors
-	@Bean
-	public HandlerInterceptor loginInterceptor() {
-		return new LoginInterceptor();
-	}
+//	@Bean
+//	public HandlerInterceptor loginInterceptor() {
+//		return new LoginInterceptor();
+//	}
 
 	@Bean
 	public HandlerInterceptor logoutInterceptor() {
@@ -54,8 +54,8 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor())
-				.addPathPatterns(env.getProperty("web.auth-url"));
+//		registry.addInterceptor(loginInterceptor())
+//				.addPathPatterns(env.getProperty("web.auth-url"));
 
 		registry.addInterceptor(logoutInterceptor())
 				.addPathPatterns(env.getProperty("web.logout-url"));

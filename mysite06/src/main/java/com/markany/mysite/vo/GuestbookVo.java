@@ -1,13 +1,27 @@
 package com.markany.mysite.vo;
 
+import java.time.Instant;
+
+import org.influxdb.annotation.Column;
+import org.influxdb.annotation.Measurement;
+
+@Measurement(name="mysite_guestbook")
 public class GuestbookVo {
-	private long no;
-	private String name;
-	private String password;
-	private String message;
-	private String regDate;
 	
-	public long getNo() {
+	@Column(name="no")
+	private double no;
+	
+	@Column(name="name")
+	private String name;
+	
+	@Column(name="password")
+	private String password;
+	
+	@Column(name="message")
+	private String message;
+	
+	
+	public double getNo() {
 		return no;
 	}
 	public void setNo(long no) {
@@ -31,15 +45,8 @@ public class GuestbookVo {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getReg_date() {
-		return regDate;
-	}
-	public void setReg_date(String regDate) {
-		this.regDate = regDate;
-	}
 	@Override
 	public String toString() {
-		return "GuestbookVo [no=" + no + ", name=" + name + ", password=" + password + ", message=" + message
-				+ ", reg_date=" + regDate + "]";
+		return "GuestbookVo [no=" + no + ", name=" + name + ", password=" + password + ", message=" + message + "]";
 	}
 }
