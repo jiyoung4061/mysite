@@ -34,6 +34,5 @@
 		<module>mysite03</module>
 		<module>mysite04</module>
 		<module>mysite06</module>
-		<module>influxbootsample</module>
 	</modules>
 </project>
